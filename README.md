@@ -18,3 +18,7 @@ This is a program for redoing the 4,3,3-exact repair coding technique. This prog
 
 * The program can only solve simple 4,3,3-exact repair problem and 3,2,2-exact repair problem now.
 * The program will by completely modified during the winter holiday, after final-exam.
+
+## Maintenance Log
+
+* 2019/2/1 Add the class "Shannon Inequality" file.
