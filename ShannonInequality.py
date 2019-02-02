@@ -2,18 +2,62 @@ import numpy as np
 import math
 import itertools
 
-class ShannonInequality:
-    def __init__(self, nodeNum):
+class Entropy:
+    def __init__(self, term):
         """
-        :param nodeNum: number of storage nodes
+        :param term: entropy term, string
+        :return None
         """
-        self.nodeNum = nodeNum
-        self.storage = {"W"+str(i): 0 for i in range(1, self.nodeNum+1)}
-        self.bandwidth = {"S"+str(i)+str(j): 0 for i in range(1, self.nodeNum+1) for j in range(1, nodeNum+1)}
-        return
+        self.term = term
     
 
+class JointEntropy:
+    def __init__(self, terms):
+        """
+        :param terms: entropy terms, list
+        :return None
+        """
+        self.terms = terms
+        self.entropies = [Entropy(term) for term in terms]
+    
+    def expand(self):
+        """
+        Expand the entropy terms as the paper introduced.
+        Return the flag if the entropy terms has changed.
+        :return flag (modified: true, else: false)
+        """
+    
+    def show(self):
+        """
+        show the entropy terms. Reconstruct the print if possible
+        """
+    
+
+class ShannonInequality:
+    def __init__(self, JointEntropies, number):
+        """
+        :param terms: joint entropy terms, list with positive or negative
+        :param number: the number the joint terms are smaller to
+        :return None
+        """
+        self.jointTerms = JointEntropies
+        self.number = number
+    
+
+class ShannonInequalities:
+    def __init__(self, inequalities):
+        """
+        :param inequalities: list of shannon inequality
+        :return None
+        """
+        self.inequalities = inequalities
+    
+    def generateMatrix(self):
+        """
+        :param None
+        :return the inequality coefficient matrix, the number vector
+        """
+
+
 if __name__ == "__main__":
-    s = ShannonInequality(3)
-    print(s.bandwidth)
-    print(s.storage)
+    print("test")
