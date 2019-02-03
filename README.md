@@ -24,3 +24,4 @@ This is a program for redoing the 4,3,3-exact repair coding technique. This prog
 * 2019/2/1 Add the class "Shannon Inequality" file.
 * 2019/2/2 Update class framework, add function usage. Actual work not begin yet.
 * 2019/2/2 Update will be paused during Spring Festival, when I can't get Wi-Fi.
+* 2019/2/3 Update the class file
