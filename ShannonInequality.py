@@ -12,11 +12,11 @@ class Entropy:
         self.term = term
         self.total_number = total_number
         self.property = term[0]
-        self.master = term[1]
+        self.master = int(term[1])
         if self.property == 'S':
-            self.slave = term[2]
+            self.slave = int(term[2])
         else:
-            self.slave = ''
+            self.slave = 0
     
 
 class JointEntropy:
@@ -42,7 +42,10 @@ class JointEntropy:
             for entropy_term in self.entropies:
                 if entropy_term.property == 'W':
                     for generate_term in [Entropy('S'+str(entropy_term.master)+j, self.total_number)  \ 
-                        for j in range(1, 1+self.total_number) if j != entropy_term.master]
+                        for j in range(1, 1+self.total_number) if j != entropy_term.master]:
+                        if generate_term not in self.entropies:
+                            (self.entropies).append(generate_term)
+                            change_flag = True
     
     def show(self):
         """
