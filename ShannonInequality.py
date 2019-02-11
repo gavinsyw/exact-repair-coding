@@ -33,19 +33,32 @@ class JointEntropy:
         Expand the entropy terms as the paper introduced.
         :return None
         """
-        W_list = [Entropy('W'+str(i), self.total_number) for i in range(1, 1+self.total_number)]
-        S_list = [Entropy('S'+str(i)+str(j), self.total_number) \
-             for i in range(1, 1+self.total_number) for j in range(self.total_number) if i != j]
         change_flag = True
         while change_flag:
             change_flag = False
             for entropy_term in self.entropies:
                 if entropy_term.property == 'W':
-                    for generate_term in [Entropy('S'+str(entropy_term.master)+j, self.total_number)  \ 
-                        for j in range(1, 1+self.total_number) if j != entropy_term.master]:
-                        if generate_term not in self.entropies:
-                            (self.entropies).append(generate_term)
-                            change_flag = True
+                    i = entropy_term.master
+                    for j in range(1, 1+self.total_number):
+                        if i == j:
+                            continue
+                        else:
+                            if Entropy('S'+str(i)+str(j), self.total_number) not in self.entropies:
+                                change_flag = True
+                                (self.entropies).append(Entropy('S'+str(i)+str(j), self.total_number))
+            
+            for j in range(1, 1+self.total_number):
+                exist_flag = True
+                for i in range(1, 1+self.total_number):
+                    if i == j:
+                        continue
+                    else:
+                        if Entropy('S'+str(i)+str(j), self.total_number) not in self.entropies:
+                            exist_flag = False
+                if exist_flag:
+                    if Entropy('W'+str(j), self.total_number) not in self.entropies:
+                        change_flag = True
+                        (self.entropies).append(Entropy('W'+str(j), self.total_number))
     
     def show(self):
         """
