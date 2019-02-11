@@ -161,7 +161,7 @@ if __name__ == '__main__':
     er_set_growth_III_II_II.symmetry_reduction(final_set)
     final_set.append('000000000')
     final_set.sort()
-    print final_set
+    print(final_set)
     generate_shannon_inequalities_H(final_set, inequality_matrix, inequality_vector)
     generate_shannon_inequalities_I(final_set, inequality_matrix, inequality_vector)
     inequality_matrix.append(tuple([0 for i in range(7)]+[1]+[0 for i in range(8, len(final_set))]))
@@ -174,7 +174,7 @@ if __name__ == '__main__':
     equality_vector = [0, 1]
     c = [0 for i in range(len(final_set))]
     c[1] = 1
-    print np.array(inequality_matrix), inequality_vector
+    print(np.array(inequality_matrix), inequality_vector)
     result = op.linprog(np.array(c), A_ub=np.array(inequality_matrix), b_ub=np.array(inequality_vector),
                         A_eq=np.array(equality_matrix), b_eq=np.array(equality_vector))
-    print result
+    print(result)
