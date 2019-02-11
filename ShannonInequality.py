@@ -18,6 +18,12 @@ class Entropy:
         else:
             self.slave = 0
     
+    def __eq__(self, anoEntropy):
+        if self.term == anoEntropy.term and self.total_number == anoEntropy.total_number:
+            return True
+        else:
+            return False
+    
 
 class JointEntropy:
     def __init__(self, terms, total_number):
@@ -35,6 +41,7 @@ class JointEntropy:
         """
         change_flag = True
         while change_flag:
+            # self.show()
             change_flag = False
             for entropy_term in self.entropies:
                 if entropy_term.property == 'W':
@@ -46,6 +53,7 @@ class JointEntropy:
                             if Entropy('S'+str(i)+str(j), self.total_number) not in self.entropies:
                                 change_flag = True
                                 (self.entropies).append(Entropy('S'+str(i)+str(j), self.total_number))
+                                # print("added: S"+str(i)+str(j))
             
             for j in range(1, 1+self.total_number):
                 exist_flag = True
@@ -59,6 +67,7 @@ class JointEntropy:
                     if Entropy('W'+str(j), self.total_number) not in self.entropies:
                         change_flag = True
                         (self.entropies).append(Entropy('W'+str(j), self.total_number))
+                        # print("added: W"+str(j))
     
     def show(self):
         """
@@ -95,4 +104,8 @@ class ShannonInequalities:
 
 
 if __name__ == "__main__":
-    print("test")
+    e = Entropy("W1", 4)
+    es = JointEntropy(["W1", "W2", "W3"], 4)
+    es.show()
+    es.expand()
+    es.show()

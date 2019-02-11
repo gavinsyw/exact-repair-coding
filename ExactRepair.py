@@ -1,4 +1,4 @@
-import ShannonInequality as *
+import ShannonInequality
 import numpy as np
 import scipy.optimize as op
 import matplotlib.pyplot
@@ -24,3 +24,6 @@ class ExactRepair:
         :return usedInequalities
         """
         return []
+
+if __name__ == "__main__":
+    print("Test")
