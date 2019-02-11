@@ -75,6 +75,9 @@ class JointEntropy:
         """
         print("Entropy Terms: ", [str(item.term) for item in self.entropies])
         print("Total Number: ", str(self.total_number))
+
+    def items(self):
+        return [str(item.term) for item in self.entropies]
     
 
 class ShannonInequality:
