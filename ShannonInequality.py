@@ -4,13 +4,12 @@ import itertools
 
 
 class Entropy:
-    def __init__(self, term, total_number):
+    def __init__(self, term):
         """
         :param term: entropy term, string
         :return None
         """
         self.term = term
-        self.total_number = total_number
         self.property = term[0]
         self.master = int(term[1])
         if self.property == 'S':
@@ -19,7 +18,7 @@ class Entropy:
             self.slave = 0
     
     def __eq__(self, anoEntropy):
-        if self.term == anoEntropy.term and self.total_number == anoEntropy.total_number:
+        if self.term == anoEntropy.term:
             return True
         else:
             return False
@@ -105,6 +104,8 @@ class ShannonInequalities:
         :return the inequality coefficient matrix, the number vector
         """
 
+
+def conditionalEntropy(masters, conditions, number):
 
 if __name__ == "__main__":
     e = Entropy("W1", 4)

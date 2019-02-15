@@ -32,7 +32,7 @@ class ExactRepair:
                 existingTerms.append(e_items)
             time_count += 1
             if time_count % 1024 == 0:
-                print("Completed: ", int(time_count / 65536 * 100), "%")
+                print("Completed:", int(time_count / 65536 * 100), "%")
         return existingTerms
 
     def generateInequalities(self):
