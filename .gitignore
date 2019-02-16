@@ -3,3 +3,4 @@
 *.pdf
 *.swp
 __pycache__/
+*.txt
