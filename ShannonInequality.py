@@ -93,9 +93,9 @@ class JointEntropy:
             new_entropy_list = list()
             for entropy in self.entropies:
                 if entropy.property == 'W':
-                    new_entropy_list.append(Entropy('W'+permutation[entropy.master+1]))
+                    new_entropy_list.append(Entropy('W'+permutation[entropy.master-1]))
                 else:
-                    new_entropy_list.append(Entropy('S'+permutation[entropy.master+1]+permutation[entropy.slave+1]))
+                    new_entropy_list.append(Entropy('S'+permutation[entropy.master-1]+permutation[entropy.slave-1]))
             if new_entropy_list not in symmetricTerms:
                 symmetricTerms.append(new_entropy_list)
         return symmetricTerms

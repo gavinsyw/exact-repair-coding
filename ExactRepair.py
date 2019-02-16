@@ -18,8 +18,17 @@ class ExactRepair:
         termNum = len(all_terms)
         for i in range(1, 1+termNum):
             all_iter += list(itertools.combinations(all_terms, i))
-
-        return all_iter
+        reduced_terms = []
+        for i in all_iter:
+            entropy = si.JointEntropy(i, self.nodeNum)
+            symmetric_entropies = entropy.symmetricTerms()
+            for symmetric_entropy in symmetric_entropies:
+                try:
+                    all_iter.remove(symmetric_entropy)
+                except ValueError:
+                    continue
+            reduced_terms.append(i)
+        return reduced_terms
 
     def termTable(self, iter_terms = []):
         """ 
@@ -70,5 +79,5 @@ class ExactRepair:
 if __name__ == "__main__":
     print("Test")
     a = ExactRepair(4)
-    terms = a.termTable()
+    terms = a.termTable(a.build_symmetricity())
     print(len(terms))
