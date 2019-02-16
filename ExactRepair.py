@@ -3,25 +3,39 @@ import numpy as np
 import scipy.optimize as op
 import matplotlib.pyplot
 import itertools
+import math
 
 class ExactRepair:
     def __init__(self, nodeNum):
         self.nodeNum = nodeNum
+        self.all_terms = ["W"+str(i) for i in range(1, 1+self.nodeNum)] + \
+                ["S"+str(i)+str(j) for i in range(1, 1+self.nodeNum) \
+                for j in range(1, 1+self.nodeNum) if i != j]
     
-    def termTable(self):
+    def build_symmetricity(self):
+        all_terms = self.all_terms
+        all_iter = list()
+        termNum = len(all_terms)
+        for i in range(1, 1+termNum):
+            all_iter += list(itertools.combinations(all_terms, i))
+
+        return all_iter
+
+    def termTable(self, iter_terms = []):
         """ 
         :return Table of terms
         """
-        all_terms = ["W"+str(i) for i in range(1, 1+self.nodeNum)] + \
-                ["S"+str(i)+str(j) for i in range(1, 1+self.nodeNum) \
-                for j in range(1, 1+self.nodeNum) if i != j]
+        all_terms = self.all_terms
         termNum = len(all_terms)
         d = dict()
         existingTerms = list()
-        all_iter = list()
-        for i in range(1, 1+termNum):
-            all_iter += list(itertools.combinations(all_terms, i))
+        all_iter = iter_terms
+        if all_iter == []:
+            for i in range(1, 1+termNum):
+                all_iter += list(itertools.combinations(all_terms, i))
         time_count = 0
+        total_number = math.pow(2, self.nodeNum * self.nodeNum)
+        percent_number = int(total_number / 100)
         for item in all_iter:
             e = si.JointEntropy(item, self.nodeNum)
             e.expand()
@@ -31,8 +45,8 @@ class ExactRepair:
             if tuple(e_items) not in existingTerms:
                 existingTerms.append(e_items)
             time_count += 1
-            if time_count % 1024 == 0:
-                print("Completed:", int(time_count / 65536 * 100), "%")
+            if time_count % percent_number == 0:
+                print("Completed:", int(time_count / total_number * 100), "%")
         return existingTerms
 
     def generateInequalities(self):

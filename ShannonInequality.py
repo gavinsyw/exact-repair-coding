@@ -30,7 +30,7 @@ class JointEntropy:
         :param terms: entropy terms, list
         :return None
         """
-        self.entropies = [Entropy(term, total_number) for term in terms]
+        self.entropies = [Entropy(term) for term in terms]
         self.total_number = total_number
     
     def expand(self):
@@ -49,9 +49,9 @@ class JointEntropy:
                         if i == j:
                             continue
                         else:
-                            if Entropy('S'+str(i)+str(j), self.total_number) not in self.entropies:
+                            if Entropy('S'+str(i)+str(j)) not in self.entropies:
                                 change_flag = True
-                                (self.entropies).append(Entropy('S'+str(i)+str(j), self.total_number))
+                                (self.entropies).append(Entropy('S'+str(i)+str(j)))
                                 # print("added: S"+str(i)+str(j))
             
             for j in range(1, 1+self.total_number):
@@ -60,12 +60,12 @@ class JointEntropy:
                     if i == j:
                         continue
                     else:
-                        if Entropy('S'+str(i)+str(j), self.total_number) not in self.entropies:
+                        if Entropy('S'+str(i)+str(j)) not in self.entropies:
                             exist_flag = False
                 if exist_flag:
-                    if Entropy('W'+str(j), self.total_number) not in self.entropies:
+                    if Entropy('W'+str(j)) not in self.entropies:
                         change_flag = True
-                        (self.entropies).append(Entropy('W'+str(j), self.total_number))
+                        (self.entropies).append(Entropy('W'+str(j)))
                         # print("added: W"+str(j))
     
     def show(self):
@@ -77,7 +77,29 @@ class JointEntropy:
 
     def items(self):
         return [str(item.term) for item in self.entropies]
+
+    def __eq__(self, anoTerm):
+        if len(self.entropies) != len(anoTerm.entropies):
+            return False
+        for entropy in self.entropies:
+            if entropy not in anoTerm.entropies:
+                return False
+        return True
     
+    def symmetricTerms(self):
+        all_permutations = list(itertools.permutations([str(i) for i in range(1, 1+self.total_number)], self.total_number))        
+        symmetricTerms = [self.entropies]
+        for permutation in all_permutations:
+            new_entropy_list = list()
+            for entropy in self.entropies:
+                if entropy.property == 'W':
+                    new_entropy_list.append(Entropy('W'+permutation[entropy.master+1]))
+                else:
+                    new_entropy_list.append(Entropy('S'+permutation[entropy.master+1]+permutation[entropy.slave+1]))
+            if new_entropy_list not in symmetricTerms:
+                symmetricTerms.append(new_entropy_list)
+        return symmetricTerms
+            
 
 class ShannonInequality:
     def __init__(self, JointEntropies, number):
@@ -103,9 +125,6 @@ class ShannonInequalities:
         :param None
         :return the inequality coefficient matrix, the number vector
         """
-
-
-def conditionalEntropy(masters, conditions, number):
 
 if __name__ == "__main__":
     e = Entropy("W1", 4)
