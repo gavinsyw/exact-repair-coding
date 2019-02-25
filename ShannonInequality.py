@@ -127,7 +127,7 @@ class ShannonInequalities:
         """
 
 if __name__ == "__main__":
-    e = Entropy("W1", 4)
+    e = Entropy("W1")
     es = JointEntropy(["W1", "W2", "W3"], 4)
     es.show()
     es.expand()
