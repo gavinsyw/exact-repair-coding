@@ -27,3 +27,4 @@ This is a program for redoing the 4,3,3-exact repair coding technique. This prog
 * 2019/2/3 Update the class file
 * 2019/2/11 ShannonIneqaulity part basically functional, starting ExactRepair to find bounds.
 * 2019/2/16 Add symmetric reduction part. More still need to be done.
+* 2019/2/25 Structural Modification. Try to optimize algorithm of symmetry reduction.
