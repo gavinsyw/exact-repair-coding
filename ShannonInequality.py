@@ -3,6 +3,7 @@ import math
 import itertools
 
 
+
 class Entropy:
     def __init__(self, term):
         """
@@ -86,8 +87,7 @@ class JointEntropy:
                 return False
         return True
     
-    def symmetricTerms(self):
-        all_permutations = list(itertools.permutations([str(i) for i in range(1, 1+self.total_number)], self.total_number))        
+    def symmetricTerms(self, all_permutations):
         symmetricTerms = [self.entropies]
         for permutation in all_permutations:
             new_entropy_list = list()
