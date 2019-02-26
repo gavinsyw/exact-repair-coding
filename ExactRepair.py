@@ -78,9 +78,35 @@ class ExactRepair:
         """
         return []
 
+
+def build_symmetricity(l):
+    """
+    :para L: list of entropy items in strings
+    :return the symmetry reduction of l
+    """
+    return l
+
+
+def write_to_file(l, files):
+    """
+    :para l: list of entropy terms, in entropy terms or in strings
+    :return None
+    """
+    with open(files, "w") as f:
+        for i in l:
+            f.write(i)
+            f.write("\n")
+    f.close()
+    return
+
+
+def read_from_file(files):
+    with open(files, "r") as f:
+        for 
+
 if __name__ == "__main__":
     print("Test")
-    a = ExactRepair(5)
+    a = ExactRepair(4)
     terms = a.termTable()
     print(len(terms))
-    print(len(terms.build_symmetricity()))
+    print(len(build_symmetricity(terms)))
