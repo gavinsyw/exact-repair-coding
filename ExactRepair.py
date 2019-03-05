@@ -79,12 +79,27 @@ class ExactRepair:
         return []
 
 
-def build_symmetricity(l):
+def build_symmetricity(all_iter, nodeNum):
     """
     :para L: list of entropy items in strings
     :return the symmetry reduction of l
     """
-    return l
+    all_terms = ["W"+str(i) for i in range(1, 1+nodeNum)] + \
+                ["S"+str(i)+str(j) for i in range(1, 1+nodeNum) \
+                for j in range(1, 1+nodeNum) if i != j]
+    termNum = len(all_terms)
+    reduced_terms = []
+    all_permutations = list(itertools.permutations([str(i) for i in range(1, 1+nodeNum)], nodeNum))
+    for i in all_iter:
+        entropy = si.JointEntropy(i, nodeNum)
+        symmetric_entropies = entropy.symmetricTerms(all_permutations)
+        for symmetric_entropy in symmetric_entropies:
+            try:
+                all_iter.remove(symmetric_entropy)
+            except ValueError:
+                continue
+        reduced_terms.append(i)
+    return reduced_terms
 
 
 def write_to_file(l, files):
@@ -100,13 +115,9 @@ def write_to_file(l, files):
     return
 
 
-def read_from_file(files):
-    with open(files, "r") as f:
-        for 
-
 if __name__ == "__main__":
     print("Test")
     a = ExactRepair(4)
     terms = a.termTable()
     print(len(terms))
-    print(len(build_symmetricity(terms)))
+    print(len(build_symmetricity(terms, 4)))
