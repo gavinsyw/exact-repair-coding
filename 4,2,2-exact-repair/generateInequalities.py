@@ -174,7 +174,7 @@ if __name__ == '__main__':
     inequality_vector = []
     set_growth.all_growth(all_sets, final_set)
     set_growth.symmetry_reduction(final_set)
-    final_set.append('000000000')
+    final_set.append('0000000000000000')
     final_set.sort()
     print(final_set)
     generate_shannon_inequalities_H(final_set, inequality_matrix, inequality_vector)

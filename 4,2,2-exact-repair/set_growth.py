@@ -117,11 +117,11 @@ def symmetry_reduction(s):
                 s.remove(symmetry_item)
 
 
-print("growth set: ")
+# print("growth set: ")
 all_growth(all_sets, final_set)
-print(len(final_set))
+# print(len(final_set))
 symmetry_reduction(final_set)
 final_set.sort()
-for x in final_set:
-    print(x)
-print(len(final_set))
+# for x in final_set:
+#     print(x)
+# print(len(final_set))
