@@ -3,7 +3,7 @@ import sys
 import scipy.optimize as op
 import numpy as np
 import itertools
-import er_set_growth_III_II_II
+import set_growth
 
 # coding method: W1, W2, W3, S12, S13, S21, S23, S31, S32, a 9-bit number
 #          bits:  0,  1,  2,   3,   4,   5,   6,   7,   8
@@ -157,8 +157,8 @@ if __name__ == '__main__':
     final_set = []
     inequality_matrix = []
     inequality_vector = []
-    er_set_growth_III_II_II.all_growth(all_sets, final_set)
-    er_set_growth_III_II_II.symmetry_reduction(final_set)
+    set_growth.all_growth(all_sets, final_set)
+    set_growth.symmetry_reduction(final_set)
     final_set.append('000000000')
     final_set.sort()
     print(final_set)
