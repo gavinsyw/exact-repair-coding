@@ -11,48 +11,63 @@ import set_growth
 
 H_A = 1
 
-all_sets = [('000000000'+bin(x)[2:])[-9:] for x in range(0x1, 0x1FF+1)]
+all_sets = [('0000000000000000'+bin(x)[2:])[-16:] for x in range(0x0001, 0xFFFF+1)]
+
+all_permutation = list(itertools.permutations(['1', '2', '3', '4'], 4))
+
 
 bit_position = {"W1": 0,
                 "W2": 1,
                 "W3": 2,
-                "S12": 3,
-                "S13": 4,
-                "S21": 5,
-                "S23": 6,
-                "S31": 7,
-                "S32": 8}
+                "W4": 3,
+                "S12": 4,
+                "S13": 5,
+                "S14": 6,
+                "S21": 7,
+                "S23": 8,
+                "S24": 9,
+                "S31": 10,
+                "S32": 11,
+                "S34": 12,
+                "S41": 13,
+                "S42": 14,
+                "S43": 15}
 
 bit_position = bidict(bit_position)
 
-all_permutation = list(itertools.permutations(['1', '2', '3'], 3))
+
+all_permutation = list(itertools.permutations(['1', '2', '3', '4'], 4))
 
 
 def find_growth(s):
     growth = s
     flag = False
-    for i in range(0, 3):
+    for i in range(0, 4):
         if growth[i] == '1':
-            if growth[2*i+3] != '1' or growth[2*i+4] != '1':
-                growth[2*i+3] = growth[2*i+4] = '1'
+            if growth[3*i+4] != '1' or growth[3*i+5] != '1' or growth[3*i+6] != '1':
+                growth[3 * i + 4] = growth[3 * i + 5] = growth[3 * i + 6] = '1'
                 flag = True
-    if growth[5] == '1' and growth[7] == '1':
+    if growth[7] == '1' and growth[10] == '1' and growth[13] == '1':
         if growth[0] != '1':
             growth[0] = '1'
             flag = True
-    if growth[3] == '1' and growth[8] == '1':
+    if growth[4] == '1' and growth[11] == '1' and growth[14] == '1':
         if growth[1] != '1':
             growth[1] = '1'
             flag = True
-    if growth[4] == '1' and growth[6] == '1':
+    if growth[5] == '1' and growth[8] == '1' and growth[15] == '1':
         if growth[2] != '1':
             growth[2] = '1'
+            flag = True
+    if growth[6] == '1' and growth[9] == '1' and growth[12] == '1':
+        if growth[3] != '1':
+            growth[3] = '1'
             flag = True
     if not flag:
         # save the result
         return ''.join(growth)
     else:
-        return find_growth(growth)
+        find_growth(growth)
 
 
 def union(s1, s2):
@@ -88,10 +103,10 @@ def findInSet(element_set, s):
     :return: the order of s or symmetry of s in element_set
     """
     s_semmetry = find_growth(list(s))
-    entropy_terms = [bit_position.inv[a] for a in range(0, 9) if s_semmetry[a] == '1']
+    entropy_terms = [bit_position.inv[a] for a in range(0, 16) if s_semmetry[a] == '1']
     symmetry_item = 0
     while s_semmetry not in element_set:
-        s_semmetry = ['0' for a in range(9)]
+        s_semmetry = ['0' for a in range(16)]
         i = all_permutation[symmetry_item]
         for term in entropy_terms:
             newterm = list(term)
@@ -108,7 +123,7 @@ def findInSet(element_set, s):
 
 def generate_shannon_inequalities_H(element_set, iem_left, iem_right):
     general_vec = [0 for i in range(len(element_set))]
-    general_vec[10] = -1
+    general_vec[len(element_set)-1] = -1
     for i in range(len(element_set)-1):
         general_vec[i] = 1
         iem_left.append(tuple(general_vec))
@@ -119,13 +134,13 @@ def generate_shannon_inequalities_H(element_set, iem_left, iem_right):
 
 def generate_shannon_inequalities_I(element_set, iem_left, iem_right):
     general_vec = [0 for i in range(len(element_set))]
-    for i in range(9):
+    for i in range(16):
         for j in range(i):
-            element_1 = ['0' for i in range(9)]
+            element_1 = ['0' for i in range(16)]
             element_1[i] = '1'
             element_1 = ''.join(element_1)
 
-            element_2 = ['0' for i in range(9)]
+            element_2 = ['0' for i in range(16)]
             element_2[j] = '1'
             element_2 = ''.join(element_2)
 
