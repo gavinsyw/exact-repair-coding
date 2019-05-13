@@ -92,7 +92,7 @@ def symmetry_reduction(s):
     for i in s:
         all_symmetry_items = symmetric_set(i)
         if i == '000001010':
-            print i, all_symmetry_items
+            print(i, all_symmetry_items)
         for symmetry_item in all_symmetry_items:
             if symmetry_item in s:
                 s.remove(symmetry_item)

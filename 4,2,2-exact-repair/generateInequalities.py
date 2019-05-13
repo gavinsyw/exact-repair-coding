@@ -153,7 +153,7 @@ def generate_shannon_inequalities_I(element_set, iem_left, iem_right):
             element_1 = element_set[element_1]
             element_2 = findInSet(element_set, ''.join(element_2))
             if element_1 == element_2:
-                continue
+                continuex
             tmp2 = element_2
             element_2 = element_set[element_2]
             general_vec[tmp1] = general_vec[tmp2] = -1

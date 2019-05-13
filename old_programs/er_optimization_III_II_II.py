@@ -173,7 +173,7 @@ if __name__ == '__main__':
     equality_matrix.append(np.array([0 for i in range(len(final_set)-1)]+[1]))
     equality_vector = [0, 1]
     c = [0 for i in range(len(final_set))]
-    c[1] = 1
+    c[1] = 0
     print(np.array(inequality_matrix), inequality_vector)
     result = op.linprog(np.array(c), A_ub=np.array(inequality_matrix), b_ub=np.array(inequality_vector),
                         A_eq=np.array(equality_matrix), b_eq=np.array(equality_vector))

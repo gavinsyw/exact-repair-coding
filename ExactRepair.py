@@ -117,7 +117,7 @@ def write_to_file(l, files):
 
 if __name__ == "__main__":
     print("Test")
-    a = ExactRepair(4)
+    a = ExactRepair(5)
     terms = a.termTable()
     print(len(terms))
     print(len(build_symmetricity(terms, 4)))
