@@ -1,4 +1,4 @@
-import ShannonInequality as si
+import ShannonInequality as SI
 import numpy as np
 import scipy.optimize as op
 import matplotlib.pyplot
@@ -8,9 +8,7 @@ import math
 class ExactRepair:
     def __init__(self, nodeNum):
         self.nodeNum = nodeNum
-        self.all_terms = ["W"+str(i) for i in range(1, 1+self.nodeNum)] + \
-                ["S"+str(i)+str(j) for i in range(1, 1+self.nodeNum) \
-                for j in range(1, 1+self.nodeNum) if i != j]
+        self.all_terms = [[i, j] for i in range(1, 1+nodeNum) for j in range(1, 1+nodeNum)]
     
     def build_symmetricity(self):
         all_terms = self.all_terms
@@ -19,9 +17,9 @@ class ExactRepair:
         for i in range(1, 1+termNum):
             all_iter += list(itertools.combinations(all_terms, i))
         reduced_terms = []
-        all_permutations = list(itertools.permutations([str(i) for i in range(1, 1+self.nodeNum)], self.nodeNum))
+        all_permutations = list(itertools.permutations([i for i in range(1, 1+self.nodeNum)], self.nodeNum))
         for i in all_iter:
-            entropy = si.JointEntropy(i, self.nodeNum)
+            entropy = SI.JointEntropy(i, self.nodeNum)
             symmetric_entropies = entropy.symmetricTerms(all_permutations)
             for symmetric_entropy in symmetric_entropies:
                 try:
@@ -48,7 +46,7 @@ class ExactRepair:
         total_number = math.pow(2, self.nodeNum * self.nodeNum)
         percent_number = int(total_number / 100)
         for item in all_iter:
-            e = si.JointEntropy(item, self.nodeNum)
+            e = SI.JointEntropy(item, self.nodeNum)
             e.expand()
             e_items = e.items()
             e_items.sort()
@@ -84,14 +82,12 @@ def build_symmetricity(all_iter, nodeNum):
     :para L: list of entropy items in strings
     :return the symmetry reduction of l
     """
-    all_terms = ["W"+str(i) for i in range(1, 1+nodeNum)] + \
-                ["S"+str(i)+str(j) for i in range(1, 1+nodeNum) \
-                for j in range(1, 1+nodeNum) if i != j]
+    all_terms = [[i, j] for i in range(1, 1+nodeNum) for j in range(1, 1+nodeNum)]
     termNum = len(all_terms)
     reduced_terms = []
-    all_permutations = list(itertools.permutations([str(i) for i in range(1, 1+nodeNum)], nodeNum))
+    all_permutations = list(itertools.permutations([i for i in range(1, 1+nodeNum)], nodeNum))
     for i in all_iter:
-        entropy = si.JointEntropy(i, nodeNum)
+        entropy = SI.JointEntropy(i, nodeNum)
         symmetric_entropies = entropy.symmetricTerms(all_permutations)
         for symmetric_entropy in symmetric_entropies:
             try:
@@ -117,7 +113,9 @@ def write_to_file(l, files):
 
 if __name__ == "__main__":
     print("Test")
-    a = ExactRepair(5)
+    a = ExactRepair(4)
     terms = a.termTable()
     print(len(terms))
     print(len(build_symmetricity(terms, 4)))
+    print(terms)
+    print(build_symmetricity(terms, 4))
