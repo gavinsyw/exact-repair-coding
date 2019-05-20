@@ -10,7 +10,7 @@ class ExactRepair:
         self.nodeNum = nodeNum
         self.all_terms = [[i, j] for i in range(1, 1+nodeNum) for j in range(1, 1+nodeNum)]
     
-    def build_symmetricity(self):
+    def build_symmetric(self):
         all_terms = self.all_terms
         all_iter = list()
         termNum = len(all_terms)
@@ -77,7 +77,7 @@ class ExactRepair:
         return []
 
 
-def build_symmetricity(all_iter, nodeNum):
+def build_symmetric(all_iter, nodeNum):
     """
     :para L: list of entropy items in strings
     :return the symmetry reduction of l
@@ -87,14 +87,16 @@ def build_symmetricity(all_iter, nodeNum):
     reduced_terms = []
     all_permutations = list(itertools.permutations([i for i in range(1, 1+nodeNum)], nodeNum))
     for i in all_iter:
+        i = [[int(j[0]), int(j[1])] for j in i]
         entropy = SI.JointEntropy(i, nodeNum)
         symmetric_entropies = entropy.symmetricTerms(all_permutations)
         for symmetric_entropy in symmetric_entropies:
             try:
+                symmetric_entropy = symmetric_entropy.items()
                 all_iter.remove(symmetric_entropy)
             except ValueError:
                 continue
-        reduced_terms.append(i)
+        reduced_terms.append(SI.JointEntropy(i, 4))
     return reduced_terms
 
 
@@ -116,6 +118,4 @@ if __name__ == "__main__":
     a = ExactRepair(4)
     terms = a.termTable()
     print(len(terms))
-    print(len(build_symmetricity(terms, 4)))
-    print(terms)
-    print(build_symmetricity(terms, 4))
+    print(len(build_symmetric(terms, 4)))

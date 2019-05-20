@@ -16,7 +16,7 @@ class Entropy:
         return (self.master == anoEntropy.master and self.slave == anoEntropy.slave)
     
     def __str__(self):
-        return str(self.master)+','+str(self.slave)
+        return str(self.master)+str(self.slave)
     
 
 class JointEntropy:
@@ -64,7 +64,7 @@ class JointEntropy:
         print("Node Number: ", str(self.node_number))
 
     def items(self):
-        return self.entropies
+        return [str(entropy) for entropy in self.entropies]
 
     def __eq__(self, anoTerm):
         if len(self.entropies) != len(anoTerm.entropies):
