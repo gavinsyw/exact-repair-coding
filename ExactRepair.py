@@ -92,7 +92,7 @@ def build_symmetric(all_iter, nodeNum):
         symmetric_entropies = entropy.symmetricTerms(all_permutations)
         for symmetric_entropy in symmetric_entropies:
             try:
-                symmetric_entropy = symmetric_entropy.items()
+                symmetric_entropy = tuple(symmetric_entropy.items())
                 all_iter.remove(symmetric_entropy)
             except ValueError:
                 continue
