@@ -79,10 +79,7 @@ class JointEntropy:
         for permutation in all_permutations:
             new_entropy_list = list()
             for entropy in self.entropies:
-                if entropy.master == entropy.slave:
-                    new_entropy_list.append([permutation[entropy.master-1], permutation[entropy.master-1]])
-                else:
-                    new_entropy_list.append([permutation[entropy.master-1], permutation[entropy.slave-1]])
+                new_entropy_list.append([permutation[entropy.master-1], permutation[entropy.slave-1]])
             newJointEntropy = JointEntropy(new_entropy_list, 4)
             if newJointEntropy != self and newJointEntropy not in symmetricTerms:
                 symmetricTerms.append(newJointEntropy)
