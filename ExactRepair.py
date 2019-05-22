@@ -10,50 +10,42 @@ class ExactRepair:
         self.nodeNum = nodeNum
         self.all_terms = [[i, j] for i in range(1, 1+nodeNum) for j in range(1, 1+nodeNum)]
     
-    def build_symmetric(self, all_iter):
+    def build_symmetric(self, termtable):
         """
         :para L: list of entropy items in strings
         :return the symmetry reduction of l
         """
         nodeNum = self.nodeNum
-        all_terms = self.all_terms
-        termNum = len(all_terms)
+        termNum = nodeNum * nodeNum
         reduced_terms = []
         all_permutations = list(itertools.permutations([i for i in range(1, 1+nodeNum)], nodeNum))
-        for i in all_iter:
-            i = [[int(j[0]), int(j[1])] for j in i]
-            entropy = SI.JointEntropy(i, nodeNum)
-            symmetric_entropies = entropy.symmetricTerms(all_permutations)
+        for jointTerm in termtable:
+            symmetric_entropies = jointTerm.symmetricTerms(all_permutations)
             for symmetric_entropy in symmetric_entropies:
-                symmetric_entropy = tuple(symmetric_entropy.items())
-                if symmetric_entropy in all_iter:
-                    all_iter.remove(symmetric_entropy)
-            reduced_terms.append(SI.JointEntropy(i, 4))
+                if symmetric_entropy in termtable:
+                    termtable.remove(symmetric_entropy)
+            reduced_terms.append(jointTerm)
         return reduced_terms
 
 
-    def termTable(self, iter_terms = []):
+    def termTable(self):
         """ 
         :return Table of terms
         """
         all_terms = self.all_terms
         termNum = len(all_terms)
         existingTerms = list()
-        all_iter = iter_terms
-        if all_iter == []:
-            for i in range(1, 1+termNum):
-                all_iter += list(itertools.combinations(all_terms, i))
+        all_iter = []
+        for i in range(1, 1+termNum):
+            all_iter += list(itertools.combinations(all_terms, i))
         time_count = 0
         total_number = math.pow(2, self.nodeNum * self.nodeNum)
         percent_number = int(total_number / 100)
         for item in all_iter:
             e = SI.JointEntropy(item, self.nodeNum)
             e.expand()
-            e_items = e.items()
-            e_items.sort()
-            e_items = tuple(e_items)
-            if tuple(e_items) not in existingTerms:
-                existingTerms.append(e_items)
+            if e not in existingTerms:
+                existingTerms.append(e)
             time_count += 1
             if time_count % percent_number == 0:
                 print("Completed:", int(time_count / total_number * 100), "%")
